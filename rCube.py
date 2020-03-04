@@ -92,11 +92,11 @@ class Cubes:
         print("Percentage of Pairs: " + str((dubs/tot)*100) + "%\nPercentage of Four Repeated: " + str((quads/tot)*100) + '%\n\n')
         return modified
 
-                
-            
 
 
-        
+
+
+
 class Side:
     def __init__(self, color):
         self.c = color
@@ -151,7 +151,7 @@ class Side:
         self.side = f
         return
 
-    
+
     def setCell(self,x,y,c):
         self.side[y][x] = c
         return
@@ -162,11 +162,11 @@ class Side:
                 o += j + ' '
             o += '\n'
         print(o)
-                
+
     def arr(self):
         return self.side
 class rCube:
-    
+
 
     moves = ['U','L','F','R','B','D']
     def __init__(self):
@@ -196,8 +196,8 @@ class rCube:
         #   side on the far right of the print is actually backwards.
 
         #   The prints will look like this (solved cube):
-        #       w w w 
-        #       w w w 
+        #       w w w
+        #       w w w
         #       w w w
         # o o o g g g r r r b b b
         # o o o g g g r r r b b b
@@ -249,9 +249,9 @@ class rCube:
         if len(key) > 1:
             mod = True
             key = key[0]
-            
-        #       w w w 
-        #       w w w 
+
+        #       w w w
+        #       w w w
         #       w w w
         # o o o g g g r r r b b b
         # o o o g g g r r r b b b
@@ -266,7 +266,7 @@ class rCube:
             # s3 r1 to s5 r1
             # s5 r1 to s4 r1
             # s4 r1 to s2 r1
-            # s2 r1 to s3 r1 - 
+            # s2 r1 to s3 r1 -
             self.white.r90()
             holder = self.orange.row(0)
             self.orange.setRow(0,self.green.row(0))
@@ -276,7 +276,7 @@ class rCube:
             if(mod):
                 self.turn('U')
                 self.turn('U')
-                
+
         elif key == "L":
             #L:
             # s3: r90
@@ -294,8 +294,8 @@ class rCube:
                 self.turn('L')
                 self.turn('L')
         elif key == "F":
-            #       w w w 
-            #       w w w 
+            #       w w w
+            #       w w w
             #       w w w
             # o o o g g g r r r b b b
             # o o o g g g r r r b b b
