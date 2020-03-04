@@ -59,7 +59,41 @@ class Cubes:
             return move + 'i'
         else:
             return move[0]
+    @staticmethod
+    def simplifyMoveList(lst):
+        modified = False
+        dubs = 0
+        quads = 0
+        tot = len(lst)
+        i = 0
+        while i < len(lst):
+            if i > 0:
+                if lst[i] == Cubes.reverseMove(lst[i-1]):
+                    modified = True
+                    r1 = lst.pop(i)
+                    r2 = lst.pop(i-1)
+                    i = i-2
+                    #print("Removed: " + r1 + ' ' + r2)
+                    dubs += 1
+                    if i < 0: i = 0
+            if i >= 3:
+                if(lst[i] == lst[i-1] and lst[i] == lst[i-2] and lst[i] == lst[i-3]):
+                    modified = True
+                    r1 = lst.pop(i)
+                    r2 = lst.pop(i-1)
+                    r3 = lst.pop(i-2)
+                    r4 = lst.pop(i-3)
+                    i = i-4
+                    quads += 1
+                    #print("Removed: " + r1 + ' ' + r2 + ' ' + r3 + ' ' + r4)
+                    if i < 0: i = 0
+            i += 1
+        print( "\n\nTotal Moves: " + str(tot) + "\nInverse Pairs: " + str(dubs) + "\nFour Repeated Moves: " + str(quads))
+        print("Percentage of Pairs: " + str((dubs/tot)*100) + "%\nPercentage of Four Repeated: " + str((quads/tot)*100) + '%\n\n')
+        return modified
 
+                
+            
 
 
         
@@ -340,10 +374,8 @@ class rCube:
 
 
 def main():
-    print('move: U')
-    print('reverse: ' + Cubes.reverseMove('U'))
-    print('move: Ui')
-    print('reverse: ' + Cubes.reverseMove('Ui'))
+    moves = Cubes.generateRandomMoveList(200000)
+    Cubes.simplifyMoveList(moves)
 if __name__ == '__main__':
     main()
 
