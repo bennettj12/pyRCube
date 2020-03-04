@@ -53,11 +53,13 @@ class Cubes:
             else:
                 moves[i] = moves[i][0]
         return moves
+    @staticmethod
     def reverseMove(move):
         if len(move) == 1:
             return move + 'i'
         else:
             return move[0]
+
 
 
         
