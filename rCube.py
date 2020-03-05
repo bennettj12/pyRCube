@@ -374,8 +374,8 @@ class rCube:
 
 
 def main():
-    moves = Cubes.generateRandomMoveList(200000)
-    Cubes.simplifyMoveList(moves)
+    movs = Cubes.generateRandomMoveList(200000)
+    Cubes.simplifyMoveList(movs)
 if __name__ == '__main__':
     main()
 
