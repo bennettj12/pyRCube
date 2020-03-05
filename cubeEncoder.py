@@ -1,5 +1,9 @@
 import rCube as R
 import base64
+import random
+import string
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 # cubeEncoder.py
 # Contains methods that take in cubes and spit out encoded strings, or takes in strings and converts them to cubes
 
@@ -16,6 +20,49 @@ import base64
 #       y y y
 
 
+def random_string_generator(size=6, chars=string.ascii_uppercase
+                            + string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
+
+def save_cube_to_file(cube, path="", name=""):
+    rand_string = random_string_generator(8)
+    if path != "":
+        path = path + '/'
+    if name == "":
+        path = path + 'Cube' + rand_string + '.pycube'
+    else:
+        path = path + name + '.pycube'
+    cube_string = encodeCube(cube)
+    output = open(path, 'w')
+    result = output.write(cube_string)
+    output.close()
+    print("Cube saved: " + path)
+    return path
+
+
+def open_cube_from_file(path=""):
+    if path == "":
+        extension = '.pycube'
+        ftypes = [
+            ('pyrCube state files', extension),
+            ('All files', '*'),
+        ]
+        Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
+        # show an "Open" dialog box and return the path to the selected file
+        filename = askopenfilename(title="Select cube", filetypes=ftypes)
+    else:
+        filename = path
+    cube_file = open(filename, 'r')
+    cube_string = cube_file.read()
+    print(cube_string)
+    print(len(cube_string))
+    if len(cube_string) == 72:
+        return decodeCube(cube_string)
+    else:
+        return None
+
+
 def sideString(side):
     matrix = side.side
     arr = matrix[0] + matrix[1] + matrix[2]
@@ -27,11 +74,10 @@ def sideString_to_Side(s):
     if len(s) != 9:
         return None
     side = R.Side('z')
-    side.setRow(0,[s[0],s[1],s[2]])
-    side.setRow(1,[s[3],s[4],s[5]])
-    side.setRow(2,[s[6],s[7],s[8]])
+    side.setRow(0, [s[0], s[1], s[2]])
+    side.setRow(1, [s[3], s[4], s[5]])
+    side.setRow(2, [s[6], s[7], s[8]])
     return side
-
 
 
 def encodeCube(cube):
@@ -56,10 +102,11 @@ def decodeCube(base64_cube_string):
         base64_cube_string.encode()
     ).decode()
 
-    # Defining splitting point 
+    # Defining splitting point
     n = 9
-    # Using list comprehension 
-    sideStrings = [(cube_string[i:i+n]) for i in range(0, len(cube_string), n)] 
+    # Using list comprehension
+    sideStrings = [(cube_string[i:i+n]) for
+                   i in range(0, len(cube_string), n)]
     sides = []
     for sideString in sideStrings:
         sides.append(sideString_to_Side(sideString))
@@ -75,15 +122,13 @@ def decodeCube(base64_cube_string):
 
 
 def main():
+    # create a cube, save it to a file, then open it back up
     cube = R.rCube()
     cube.randomize()
-    print("Original Cube: \n")
     cube.print()
-    cubestr = encodeCube(cube)
-    print("Cube saved to a string: \n" + cubestr)
-    cubestr2 = decodeCube(cubestr)
-    print("And finally the string converted back to cube")
-    cubestr2.print()
+    path = save_cube_to_file(cube, "", "myRandomCube")
+    cube2 = open_cube_from_file(path)
+    cube2.print()
 
 
 if __name__ == '__main__':
